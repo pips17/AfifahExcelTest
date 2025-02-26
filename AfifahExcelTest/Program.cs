@@ -1,9 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using AfifahExcelTest.Models;
+﻿using AfifahExcelTest.Models;
+using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
+using Newtonsoft.Json;
 
-string fileName = "C:\\Users\\afifah\\Desktop\\C# Article\\List of File Rename.xlsx";
+IConfiguration config = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory()) // Ensure the base path is correct
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+//string fileName = "C:\\Users\\afifah\\Desktop\\C# Article\\List of File Rename.xlsx"; //Kena masuk appsettings ni...
+string fileName = config["RenameFileList"];
 
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -56,7 +62,9 @@ while (true)
 string niNakTestSender = "nurulhanees@kenanga.com.my";
 
 var ruleSesuai = ruleList
-    .Where(x=>x.SenderEmail == niNakTestSender)
+    .Where(x => x.SenderEmail == niNakTestSender)
     .ToList();
+
+Console.WriteLine(JsonConvert.SerializeObject(ruleSesuai, Formatting.Indented));
 
 Console.ReadLine();
