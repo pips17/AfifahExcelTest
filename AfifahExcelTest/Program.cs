@@ -56,6 +56,16 @@ while (true)
 
     ruleList.Add(theRule);
 
+    if(theRule.IsRule == true)
+    {
+        fileName = $"{DateOnly.FromDateTime(DateTime.Today)} {theRule.Subject}";
+    }
+    else
+    {
+        fileName = $"{DateOnly.FromDateTime(DateTime.Today)} {theRule.FileName}";
+    }
+
+    Console.WriteLine(fileName);
     currentLine++;
 }
 
