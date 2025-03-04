@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 IConfiguration config = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory()) // Ensure the base path is correct
@@ -22,7 +23,6 @@ int startLine = 3;
 int currentLine = startLine;
 
 List<RenameRule> ruleList = new List<RenameRule>();
-
 
 while (true)
 {
@@ -64,6 +64,8 @@ while (true)
     {
         fileName = $"{DateOnly.FromDateTime(DateTime.Today)} {theRule.FileName}";
     }
+
+    fileName = Regex.Replace(fileName, @"\s*YYYYMMDD\s*", " ").Trim();
 
     Console.WriteLine(fileName);
     currentLine++;
